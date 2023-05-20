@@ -1,7 +1,8 @@
 package com.laurentiuene.shopmanagement.controller;
 
-import com.laurentiuene.shopmanagement.model.Product;
-import com.laurentiuene.shopmanagement.repository.ProductRepository;
+import com.laurentiuene.shopmanagement.dto.product.ProductDto;
+import com.laurentiuene.shopmanagement.mapper.ProductDtoMapper;
+import com.laurentiuene.shopmanagement.service.product.ProductService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,11 +14,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class ProductController {
 
-    private final ProductRepository productRepository;
+    private final ProductService productService;
+    private final ProductDtoMapper productDtoMapper;
 
     @GetMapping("/all")
-    public List<Product> getAll() {
-        return productRepository.findAll();
+    public List<ProductDto> getAll() {
+        return productService.getAll().stream()
+            .map(productDtoMapper::mapToDto)
+            .toList();
     }
 
 }
