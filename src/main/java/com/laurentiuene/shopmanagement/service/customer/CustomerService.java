@@ -6,4 +6,8 @@ import java.util.List;
 public interface CustomerService {
 
     List<Customer> getAll();
+
+    Integer createCustomer(Customer customer);
+
+    void deleteCustomer(Integer customerId);
 }
