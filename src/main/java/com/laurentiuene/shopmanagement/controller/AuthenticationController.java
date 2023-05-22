@@ -9,8 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,19 +30,17 @@ public class AuthenticationController {
 
     @PostMapping
     public JwtResponseDto createAuthenticationToken(@RequestBody JwtRequestDto jwtRequestDto) throws Exception {
-        authenticate(jwtRequestDto.username(), jwtRequestDto.password());
+        var auth = authenticate(jwtRequestDto.username(), jwtRequestDto.password());
         log.debug("Authentication created with username " + jwtRequestDto.username());
 
         final String jwt = jwtTokenGenerator.generateJwtToken(
-            jwtRequestDto.username(), jwtExpirationInterval);
+            jwtRequestDto.username(), jwtExpirationInterval, auth);
         return new JwtResponseDto(jwt);
     }
 
-    private void authenticate(String username, String password) {
+    private Authentication authenticate(String username, String password) {
         try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
-        } catch (DisabledException e) {
-            throw new CustomException("USER_DISABLED", e);
+            return authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
         } catch (BadCredentialsException e) {
             throw new CustomException("INVALID_CREDENTIALS", e);
         }

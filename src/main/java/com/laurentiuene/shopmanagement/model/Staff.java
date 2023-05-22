@@ -1,5 +1,6 @@
 package com.laurentiuene.shopmanagement.model;
 
+import com.laurentiuene.shopmanagement.model.enums.RolesEnum;
 import com.laurentiuene.shopmanagement.model.enums.StaffPositionEnum;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -45,5 +46,8 @@ public class Staff {
 
     @Column(name = "hire_date")
     private LocalDate hireDate;
+
+    @Enumerated(value = EnumType.STRING)
+    private RolesEnum role;
 
 }

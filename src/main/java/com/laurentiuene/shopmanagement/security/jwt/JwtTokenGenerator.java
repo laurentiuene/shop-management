@@ -3,9 +3,10 @@ package com.laurentiuene.shopmanagement.security.jwt;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -14,19 +15,21 @@ public class JwtTokenGenerator {
     @Value("${jwt.secret}")
     private String jwtSecret;
 
-    public String generateJwtToken(String username, int jwtExpirationIntervalSeconds) {
+    public String generateJwtToken(String username, int jwtExpirationIntervalSeconds, Authentication authentication) {
         if (username == null || "".equals(username)) {
             throw new IllegalArgumentException("Username must be provided");
         }
-        Map<String, Object> claims = new HashMap<>();
-        return createToken(claims, username, jwtExpirationIntervalSeconds);
+        String authorities = authentication.getAuthorities().stream()
+            .map(GrantedAuthority::getAuthority)
+            .collect(Collectors.joining(","));
+        return createToken(authorities, username, jwtExpirationIntervalSeconds);
     }
 
-    private String createToken(Map<String, Object> claims, String username, int jwtExpirationIntervalSeconds) {
+    private String createToken(String authorities, String username, int jwtExpirationIntervalSeconds) {
         var key = Keys.hmacShaKeyFor(this.jwtSecret.getBytes());
         Date issuedAt = new Date(System.currentTimeMillis());
         return Jwts.builder()
-            .setClaims(claims)
+            .claim("roles",authorities)
             .setSubject(username)
             .setIssuedAt(issuedAt)
             .setExpiration(Date.from(issuedAt.toInstant().plusSeconds(jwtExpirationIntervalSeconds)))

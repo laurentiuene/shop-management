@@ -15,7 +15,8 @@ CREATE TABLE staff (
  email varchar(30) NOT NULL,
  username varchar(30) UNIQUE NOT NULL,
  password varchar(100) NOT NULL,
- hire_date date NOT NULL
+ hire_date date NOT NULL,
+ role varchar(30) NOT NULL
 );
 
 CREATE TABLE product (
@@ -65,9 +66,9 @@ CREATE TABLE stock (
  quantity INT NOT NULL
 );
 
-INSERT INTO staff (firstname,lastname, position, phone, email, username, password, hire_date) VALUES
-  ('Laurentiu','Ene','MANAGER','0734839325','laurre_ene@yahoo.com','manager','$2a$04$Z2TCdboQL7Vex20esa2wqeP8nMKm9NXe7OsXJx4gWy4ZzXSvBhOIG','2022-11-08'),
-  ('Marcel','Popescu','EMPLOYEE','0712345678','u@u.u','employee','password','2022-11-30');
+INSERT INTO staff (firstname,lastname, position, phone, email, username, password, hire_date, role) VALUES
+  ('Laurentiu','Ene','MANAGER','0734839325','laurre_ene@yahoo.com','manager','$2a$04$Z2TCdboQL7Vex20esa2wqeP8nMKm9NXe7OsXJx4gWy4ZzXSvBhOIG','2022-11-08','ADMIN'),
+  ('Marcel','Popescu','EMPLOYEE','0712345678','u@u.u','employee','$2a$04$Z2TCdboQL7Vex20esa2wqeP8nMKm9NXe7OsXJx4gWy4ZzXSvBhOIG','2022-11-30','USER');
 
 INSERT INTO product (name, description, manufacturer, price) VALUES
   ('product1','an excelent product','manufacturer1','123.00'),

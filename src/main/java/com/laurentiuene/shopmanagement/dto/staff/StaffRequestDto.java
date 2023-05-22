@@ -1,5 +1,6 @@
 package com.laurentiuene.shopmanagement.dto.staff;
 
+import com.laurentiuene.shopmanagement.model.enums.RolesEnum;
 import com.laurentiuene.shopmanagement.model.enums.StaffPositionEnum;
 
 public record StaffRequestDto(String firstName,
@@ -8,6 +9,7 @@ public record StaffRequestDto(String firstName,
                               String phone,
                               String email,
                               String username,
-                              String password) {
+                              String password,
+                              RolesEnum role) {
 
 }

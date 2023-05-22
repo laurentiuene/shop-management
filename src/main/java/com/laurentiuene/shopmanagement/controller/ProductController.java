@@ -5,6 +5,7 @@ import com.laurentiuene.shopmanagement.mapper.ProductDtoMapper;
 import com.laurentiuene.shopmanagement.service.product.ProductService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +23,7 @@ public class ProductController {
     private final ProductDtoMapper productDtoMapper;
 
     @GetMapping("/all")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public List<ProductDto> getAll() {
         return productService.getAll().stream()
             .map(productDtoMapper::mapToDto)

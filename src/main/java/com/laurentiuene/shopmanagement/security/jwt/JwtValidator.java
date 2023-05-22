@@ -1,6 +1,5 @@
-package com.laurentiuene.shopmanagement.security;
+package com.laurentiuene.shopmanagement.security.jwt;
 
-import com.laurentiuene.shopmanagement.security.jwt.JwtClaimExtractor;
 import java.util.Date;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
