@@ -66,7 +66,7 @@ CREATE TABLE stock (
 );
 
 INSERT INTO staff (firstname,lastname, position, phone, email, username, password, hire_date) VALUES
-  ('Laurentiu','Ene','MANAGER','0734839325','laurre_ene@yahoo.com','manager','password','2022-11-08'),
+  ('Laurentiu','Ene','MANAGER','0734839325','laurre_ene@yahoo.com','manager','$2a$04$Z2TCdboQL7Vex20esa2wqeP8nMKm9NXe7OsXJx4gWy4ZzXSvBhOIG','2022-11-08'),
   ('Marcel','Popescu','EMPLOYEE','0712345678','u@u.u','employee','password','2022-11-30');
 
 INSERT INTO product (name, description, manufacturer, price) VALUES

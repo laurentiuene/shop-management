@@ -3,6 +3,7 @@ package com.laurentiuene.shopmanagement.repository;
 import static com.laurentiuene.shopmanagement.utils.LoggerUtils.logWithRed;
 
 import com.laurentiuene.shopmanagement.model.Staff;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -13,4 +14,7 @@ public interface StaffRepository extends JpaRepository<Staff,Integer> {
         return this.findById(id)
             .orElseThrow(() -> new IllegalArgumentException(logWithRed("Staff member with id " + id + " was not found.")));
     }
+
+    Optional<Staff> findByUsername(String username);
+
 }
