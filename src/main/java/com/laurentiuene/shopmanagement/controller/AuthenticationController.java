@@ -29,9 +29,9 @@ public class AuthenticationController {
     private final JwtTokenGenerator jwtTokenGenerator;
 
     @PostMapping
-    public JwtResponseDto createAuthenticationToken(@RequestBody JwtRequestDto jwtRequestDto) throws Exception {
+    public JwtResponseDto createAuthenticationToken(@RequestBody JwtRequestDto jwtRequestDto) {
         var auth = authenticate(jwtRequestDto.username(), jwtRequestDto.password());
-        log.debug("Authentication created with username " + jwtRequestDto.username());
+        log.info("Authentication created with username " + jwtRequestDto.username());
 
         final String jwt = jwtTokenGenerator.generateJwtToken(
             jwtRequestDto.username(), jwtExpirationInterval, auth);
