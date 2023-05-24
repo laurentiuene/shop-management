@@ -13,8 +13,7 @@ public final class JwtValidator {
         this.jwtClaimExtractor = jwtClaimExtractor;
     }
 
-    public boolean validateToken(String token, UserDetails userDetails) {
-        final String username = jwtClaimExtractor.extractUsername(token);
+    public boolean validateToken(String username, String token, UserDetails userDetails) {
         return username.equals(userDetails.getUsername()) && !isTokenExpired(token);
     }
 

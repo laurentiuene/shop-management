@@ -22,9 +22,6 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class AuthenticationController {
 
-    @Value("${jwt.expiration.interval}")
-    private Integer jwtExpirationInterval;
-
     private final AuthenticationManager authenticationManager;
     private final JwtTokenGenerator jwtTokenGenerator;
 
@@ -34,7 +31,7 @@ public class AuthenticationController {
         log.info("Authentication created with username " + jwtRequestDto.username());
 
         final String jwt = jwtTokenGenerator.generateJwtToken(
-            jwtRequestDto.username(), jwtExpirationInterval, auth);
+            jwtRequestDto.username(), auth);
         return new JwtResponseDto(jwt);
     }
 

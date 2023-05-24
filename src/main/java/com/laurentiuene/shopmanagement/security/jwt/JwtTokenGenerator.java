@@ -14,15 +14,17 @@ public class JwtTokenGenerator {
 
     @Value("${jwt.secret}")
     private String jwtSecret;
+    @Value("${jwt.expiration.interval}")
+    private Integer jwtExpirationInterval;
 
-    public String generateJwtToken(String username, int jwtExpirationIntervalSeconds, Authentication authentication) {
+    public String generateJwtToken(String username, Authentication authentication) {
         if (username == null || "".equals(username)) {
             throw new IllegalArgumentException("Username must be provided");
         }
         String authorities = authentication.getAuthorities().stream()
             .map(GrantedAuthority::getAuthority)
             .collect(Collectors.joining(","));
-        return createToken(authorities, username, jwtExpirationIntervalSeconds);
+        return createToken(authorities, username, jwtExpirationInterval);
     }
 
     private String createToken(String authorities, String username, int jwtExpirationIntervalSeconds) {
